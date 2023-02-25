@@ -13,7 +13,7 @@ You must create the resource group beforehand, e.g. with:
 
 ```
 az group create \
-  --name lag-monitor-test \
+  --name lag-monitor-sample \
   --location EastUS \
   --subscription YOUR_SUBSCRIPTION_NAME_OR_ID
 ```
@@ -22,7 +22,7 @@ The sample can then be deployed with:
 
 ```
 az deployment group create \
-    --resource-group lag-monitor-test \
+    --resource-group lag-monitor-sample \
     --subscription YOUR_SUBSCRIPTION_NAME_OR_ID \
     -f main.bicep
 ```
