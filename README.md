@@ -1,11 +1,11 @@
-# Sample for Event Hub Lag Metrics
+# Sample for Lag Metrics for Event Hub
 
 This repo sets up a minimal example (using Bicep) for using 
-Event Hub Lag Metrics and defining an Azure Monitor alert.
+Lag Metrics for Event Hub and defining an Azure Monitor alert.
 
 ## Documentation
 
-Documentation regarding Event Hub Lag Metrics can be found [here](https://huditech.github.io/event-hub-lag-metrics/).
+Documentation regarding Event Hub Lag Metrics can be found [here](https://huditech.github.io/lag-metrics/).
 
 ## Deploy the sample
 
@@ -27,20 +27,35 @@ az deployment group create \
     -f main.bicep
 ```
 
+Alternatively, you can also run:
+
+```
+./deploy.sh
+```
+
+This has the advantage that it automatically created the `.env` file for the client (see below)
+
 ## Example Client
 
 The `client` folder contain a Javascript client to produce messages
-to Event Hub in order to trigger the alert. To use it:
+to Event Hub in order to trigger the alert. To use it, either use the `.env` file 
+that was auto-created by `./deploy.sh` or create one manually:
 
 ```
 cd clients
 cp .env.template .env
 ```
 
-Fill out the file `.env` with the connection strings of the Event Hub Namespace and the 
-Storage Account.
+Then, run the sender:
 
 ```
 npm install
 node sender.js
+```
+
+You can now observe the lag metrics going up after a few minutes and the alerts being fires. 
+You can also consume the messages and observe the lag metrics going down again
+
+```
+node receiver.js
 ```

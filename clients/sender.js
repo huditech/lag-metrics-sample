@@ -2,7 +2,7 @@ const { EventHubProducerClient } = require("@azure/event-hubs");
 require('dotenv').config()
 
 const connectionString = process.env.EVENT_HUB_CONNECTION_STRING;
-const eventHubName = 'example-event-hub'
+const eventHubName = process.env.EVENT_HUB_NAME
 
 const NUMBER_OF_EVENTS = 150;
 

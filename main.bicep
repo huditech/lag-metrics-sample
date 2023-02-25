@@ -3,14 +3,17 @@ param location string = resourceGroup().location
 var uniqueId = uniqueString(resourceGroup().id)
 var storageKey = listKeys(storageAccount.id, '2021-06-01').keys[0].value
 var storageName = 'lagmonitor${uniqueId}'
-var eventHubName = 'lagmonitor${uniqueId}'
+var eventHubNamespaceName = 'lagmonitor${uniqueId}'
+var eventHubName = 'example-event-hub'
 var applicationInsightsName = 'lagmonitor${uniqueId}'
 
 var actionGroupName = 'example-action-group'
 var alertRuleName = 'example-lag-alert'
 
+var offsetContainerName = 'event-hub-checkpoints'
+
 var storageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageName};AccountKey=${storageKey};EndpointSuffix=${environment().suffixes.storage}'
-var eventHubConnectionString = listKeys(eventHubs::authRule.id, eventHubs::authRule.apiVersion).primaryConnectionString
+var eventHubConnectionString = listKeys(eventHubs::monitorAuthRule.id, eventHubs::monitorAuthRule.apiVersion).primaryConnectionString
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageName
@@ -23,13 +26,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   resource blobService 'blobServices@2021-04-01' = {
     name: 'default'
     resource eventHubCheckpointsContainer 'containers@2021-04-01' = {
-      name: 'event-hub-checkpoints'
+      name: offsetContainerName
     }
   }
 }
 
 resource eventHubs 'Microsoft.EventHub/namespaces@2021-06-01-preview' = {
-  name: eventHubName
+  name: eventHubNamespaceName
   location: location
   sku: {
     name: 'Basic'
@@ -44,7 +47,7 @@ resource eventHubs 'Microsoft.EventHub/namespaces@2021-06-01-preview' = {
   }
 
   resource eventHub 'eventhubs@2021-06-01-preview' = {
-    name: 'example-event-hub'
+    name: eventHubName
     properties: {
       messageRetentionInDays: 1
       partitionCount: 4
@@ -58,11 +61,21 @@ resource eventHubs 'Microsoft.EventHub/namespaces@2021-06-01-preview' = {
     */
   }
 
-  resource authRule 'authorizationRules@2021-11-01' = {
+  resource monitorAuthRule 'authorizationRules@2021-11-01' = {
     name: 'monitorAuthRule'
     properties: {
       rights: [
         'Manage'
+        'Listen'
+        'Send'
+      ]
+    }
+  }
+
+  resource sampleClientAuthRule 'authorizationRules@2021-11-01' = {
+    name: 'sampleClientAuthRule'
+    properties: {
+      rights: [
         'Listen'
         'Send'
       ]
@@ -94,14 +107,20 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
+resource managedAppDef 'Microsoft.Solutions/applicationDefinitions@2021-07-01' existing = {
+  scope: resourceGroup('55c079e7-8c64-4e3d-b797-a71ebda23e81', 'lag-metrics-definition')
+  name: 'lag-metrics'
+}
+
 resource managedApp 'Microsoft.Solutions/applications@2021-07-01' = {
-  name: 'event-hub-lag-metrics'
+  name: 'lag-metrics'
   // TODO: Change to kind: marketplace once published
   kind: 'servicecatalog'
   location: location
   properties: {
     managedResourceGroupId: '${resourceGroup().id}-resources-${uniqueString(resourceGroup().id)}'
-    applicationDefinitionId: '/subscriptions/55c079e7-8c64-4e3d-b797-a71ebda23e81/resourceGroups/event-hub-lag-metrics-shared/providers/Microsoft.Solutions/applicationDefinitions/event-hub-lag-metrics'
+    //applicationDefinitionId: resourceId(subscription().id, 'lag-metrics-definition', 'Microsoft.Solutions/applicationDefinitions', 'lag-metrics-definition')
+    applicationDefinitionId: managedAppDef.id
     parameters: {
       eventHubConnectionString: {
         value: eventHubConnectionString
@@ -191,3 +210,9 @@ resource actionGroup 'microsoft.insights/actionGroups@2022-06-01' = {
     ]
   }
 }
+
+#disable-next-line outputs-should-not-contain-secrets
+output eventHubConnectionString string = listKeys(eventHubs::sampleClientAuthRule.id, eventHubs::sampleClientAuthRule.apiVersion).primaryConnectionString
+output storageConnectionString string = storageConnectionString
+output offsetContainerName string = offsetContainerName
+output eventHubName string = eventHubName

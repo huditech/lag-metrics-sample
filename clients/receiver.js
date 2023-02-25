@@ -4,10 +4,10 @@ const { ContainerClient } = require("@azure/storage-blob");
 const { BlobCheckpointStore } = require("@azure/eventhubs-checkpointstore-blob");
 
 const connectionString = process.env.EVENT_HUB_CONNECTION_STRING;
-const eventHubName = "example-event-hub";
+const eventHubName = process.env.EVENT_HUB_NAME
 const consumerGroup = "$Default";
 const storageConnectionString = process.env.STORAGE_CONNECTION_STRING
-const containerName = "event-hub-checkpoints";
+const containerName = process.env.OFFSET_CONTAINER_NAME
 
 async function main() {
   // Create a blob container client and a blob checkpoint store using the client.
