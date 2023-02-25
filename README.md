@@ -27,13 +27,16 @@ az deployment group create \
     -f main.bicep
 ```
 
+You will be prompted for the email address that notifications should be sent to.
+
 Alternatively, you can also run:
 
 ```
-./deploy.sh
+./deploy.sh youremail@example.com
 ```
 
-This has the advantage that it automatically created the `.env` file for the client (see below).
+This has the advantage that it automatically creates the `.env` file for the sender and receiver 
+clients (see below).
 
 You will be prompted for an email address where the alert notifications should be sent to.
 

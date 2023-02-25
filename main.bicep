@@ -218,3 +218,4 @@ output eventHubConnectionString string = listKeys(eventHubs::sampleClientAuthRul
 output storageConnectionString string = storageConnectionString
 output offsetContainerName string = offsetContainerName
 output eventHubName string = eventHubName
+output appInsightsAppId string = appInsights.properties.AppId

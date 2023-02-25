@@ -39,13 +39,13 @@ async function main() {
     { startPosition: earliestEventPosition }
   );
 
-  // After 10 seconds, stop processing.
+  // After 30 seconds, stop processing.
   await new Promise((resolve) => {
     setTimeout(async () => {
       await subscription.close();
       await consumerClient.close();
       resolve();
-    }, 10000);
+    }, 30000);
   });
 }
 
