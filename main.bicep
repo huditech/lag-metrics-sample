@@ -188,7 +188,7 @@ resource alertRule 'microsoft.insights/scheduledqueryrules@2022-06-15' = {
         }
       ]
     }
-    autoMitigate: false
+    autoMitigate: true
     actions: {
       actionGroups: [
         actionGroup.id

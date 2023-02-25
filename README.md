@@ -55,11 +55,15 @@ npm install
 node sender.js
 ```
 
-You can now observe the lag metrics going up after a few minutes, the alert being fired and the email
-address being sent.
-
-You can also consume the messages and observe the lag metrics going down again and the alert being sent.
+You know have to consume some messages. This causes offset/checkpoint information to be written.
 
 ```
 node receiver.js
 ```
+
+Now the lag can be calculated by lag-metrics. You can now observe the lag metrics being pulished after a few minutes. If the lag is above 100, an alert will be fired and a notification will be sent
+via email.
+
+NOTE: If no messages have been consumed at all, no lag will be detected. The reason for this is
+that if no messages have been consumed, no offset information is available and thus no lag can 
+be calculated. 
