@@ -120,8 +120,8 @@ resource managedApp 'Microsoft.Solutions/applications@2021-07-01' = {
   kind: 'servicecatalog'
   location: location
   properties: {
+    #disable-next-line use-resource-id-functions
     managedResourceGroupId: '${resourceGroup().id}-resources-${uniqueString(resourceGroup().id)}'
-    //applicationDefinitionId: resourceId(subscription().id, 'lag-metrics-definition', 'Microsoft.Solutions/applicationDefinitions', 'lag-metrics-definition')
     applicationDefinitionId: managedAppDef.id
     parameters: {
       eventHubConnectionString: {

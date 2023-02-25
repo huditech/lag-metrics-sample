@@ -2,12 +2,21 @@
 
 set -e
 
+if [ "$#" -ne 1 ]; then
+    echo "Illegal number of parameters"
+    echo "Usage: ./deploy.sh you@example.com"
+    exit 1
+fi
+
+EMAIL=$1
+
 az group create \
-  --name lag-monitor-test \
+  --name lag-monitor-sample \
   --location WestEurope
 
 az deployment group create \
-    --resource-group lag-monitor-test \
+    --resource-group lag-monitor-sample \
+    --parameters notificationEmailAddress="$EMAIL" \
     -f main.bicep | tee output.json
 
 EVENT_HUB_CONNECTION_STRING=$(jq < output.json '.properties.outputs.eventHubConnectionString.value' -r)
