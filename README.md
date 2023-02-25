@@ -33,9 +33,11 @@ Alternatively, you can also run:
 ./deploy.sh
 ```
 
-This has the advantage that it automatically created the `.env` file for the client (see below)
+This has the advantage that it automatically created the `.env` file for the client (see below).
 
-## Example Client
+You will be prompted for an email address where the alert notifications should be sent to.
+
+## Send and receive messages
 
 The `client` folder contain a Javascript client to produce messages
 to Event Hub in order to trigger the alert. To use it, either use the `.env` file 
@@ -53,8 +55,10 @@ npm install
 node sender.js
 ```
 
-You can now observe the lag metrics going up after a few minutes and the alerts being fires. 
-You can also consume the messages and observe the lag metrics going down again
+You can now observe the lag metrics going up after a few minutes, the alert being fired and the email
+address being sent.
+
+You can also consume the messages and observe the lag metrics going down again and the alert being sent.
 
 ```
 node receiver.js

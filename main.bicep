@@ -1,5 +1,7 @@
 param location string = resourceGroup().location
 
+param notificationEmailAddress string
+
 var uniqueId = uniqueString(resourceGroup().id)
 var storageKey = listKeys(storageAccount.id, '2021-06-01').keys[0].value
 var storageName = 'lagmonitor${uniqueId}'
@@ -204,7 +206,7 @@ resource actionGroup 'microsoft.insights/actionGroups@2022-06-01' = {
     emailReceivers: [
       {
         name: 'email'
-        emailAddress: 'stefan@huditech.com'
+        emailAddress: notificationEmailAddress
         useCommonAlertSchema: false
       }
     ]
