@@ -141,7 +141,7 @@ resource alertRule 'microsoft.insights/scheduledqueryrules@2022-06-15' = {
     displayName: 'Lag Alert'
     severity: 3
     enabled: true
-    evaluationFrequency: 'PT5M'
+    evaluationFrequency: 'PT1M'
     scopes: [
       appInsights.id
     ]

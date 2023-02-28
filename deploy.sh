@@ -11,11 +11,11 @@ fi
 EMAIL=$1
 
 az group create \
-  --name lag-monitor-sample \
+  --name lag-metrics-sample \
   --location WestEurope
 
 az deployment group create \
-    --resource-group lag-monitor-sample \
+    --resource-group lag-metrics-sample \
     --parameters notificationEmailAddress="$EMAIL" \
     -f main.bicep | tee output.json
 
