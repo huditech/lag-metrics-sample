@@ -4,10 +4,10 @@ param notificationEmailAddress string
 
 var uniqueId = uniqueString(resourceGroup().id)
 var storageKey = listKeys(storageAccount.id, '2021-06-01').keys[0].value
-var storageName = 'lagmonitor${uniqueId}'
-var eventHubNamespaceName = 'lagmonitor${uniqueId}'
+var storageName = 'lagmetrics${uniqueId}'
+var eventHubNamespaceName = 'lagmetrics${uniqueId}'
 var eventHubName = 'example-event-hub'
-var applicationInsightsName = 'lagmonitor${uniqueId}'
+var applicationInsightsName = 'lagmetrics${uniqueId}'
 
 var actionGroupName = 'example-action-group'
 var alertRuleName = 'example-lag-alert'
@@ -55,12 +55,6 @@ resource eventHubs 'Microsoft.EventHub/namespaces@2021-06-01-preview' = {
       partitionCount: 4
       status: 'Active'
     }
-
-    /*
-    resource consumerGroup 'consumergroups@2021-11-01' = {
-      name: 'example-consumer-group'
-    }
-    */
   }
 
   resource monitorAuthRule 'authorizationRules@2021-11-01' = {
