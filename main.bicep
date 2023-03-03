@@ -52,7 +52,7 @@ resource eventHubs 'Microsoft.EventHub/namespaces@2021-06-01-preview' = {
     name: eventHubName
     properties: {
       messageRetentionInDays: 1
-      partitionCount: 4
+      partitionCount: 2
       status: 'Active'
     }
   }
@@ -104,7 +104,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 resource managedAppDef 'Microsoft.Solutions/applicationDefinitions@2021-07-01' existing = {
-  scope: resourceGroup('55c079e7-8c64-4e3d-b797-a71ebda23e81', 'lag-metrics-definition')
+  scope: resourceGroup('b2e03e4c-e01a-4d40-8c68-d50f132dea42', 'lag-metrics-definition')
   name: 'lag-metrics'
 }
 
