@@ -38,8 +38,6 @@ Alternatively, you can also run:
 This has the advantage that it automatically creates the `.env` file for the sender and receiver 
 clients (see below).
 
-You will be prompted for an email address where the alert notifications should be sent to.
-
 ## Send and receive messages
 
 The `client` folder contain a Javascript client to produce messages
