@@ -62,7 +62,7 @@ You know have to consume some messages. This causes offset/checkpoint informatio
 node receiver.js
 ```
 
-Now the lag can be calculated by lag-metrics. You can now observe the lag metrics being pulished after a few minutes. If the lag is above 100, an alert will be fired and a notification will be sent
+Now the lag can be calculated by Lag Metrics. You can observe the lag metrics being pulished after a few minutes. If the lag is above 100, an alert will be fired and a notification will be sent
 via email.
 
 NOTE: If no messages have been consumed at all, no lag will be detected. The reason for this is
