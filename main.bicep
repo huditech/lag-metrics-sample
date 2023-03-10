@@ -103,20 +103,19 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource managedAppDef 'Microsoft.Solutions/applicationDefinitions@2021-07-01' existing = {
-  scope: resourceGroup('b2e03e4c-e01a-4d40-8c68-d50f132dea42', 'lag-metrics-definition')
-  name: 'lag-metrics'
-}
-
 resource managedApp 'Microsoft.Solutions/applications@2021-07-01' = {
   name: 'lag-metrics'
-  // TODO: Change to kind: marketplace once published
-  kind: 'servicecatalog'
+  kind: 'marketplace'
   location: location
+  plan: {
+    name: 'standard'
+    product: 'lag-monitor'
+    publisher: 'huditechughaftungsbeschrnkt1673457598758'
+    version: '1.0.0'
+  }
   properties: {
     #disable-next-line use-resource-id-functions
     managedResourceGroupId: '${resourceGroup().id}-resources-${uniqueString(resourceGroup().id)}'
-    applicationDefinitionId: managedAppDef.id
     parameters: {
       eventHubConnectionString: {
         value: eventHubConnectionString
