@@ -109,7 +109,7 @@ resource managedApp 'Microsoft.Solutions/applications@2021-07-01' = {
   location: location
   plan: {
     name: 'standard'
-    product: 'lag-monitor'
+    product: 'lag-metrics'
     publisher: 'huditechughaftungsbeschrnkt1673457598758'
     version: '1.0.0'
   }
@@ -207,7 +207,7 @@ resource actionGroup 'microsoft.insights/actionGroups@2022-06-01' = {
 }
 
 #disable-next-line outputs-should-not-contain-secrets
-output eventHubConnectionString string = listKeys(eventHubs::sampleClientAuthRule.id, eventHubs::sampleClientAuthRule.apiVersion).primaryConnectionString
+output eventHubConnectionString string = eventHubs::sampleClientAuthRule.listKeys().primaryConnectionString
 output storageConnectionString string = storageConnectionString
 output offsetContainerName string = offsetContainerName
 output eventHubName string = eventHubName
