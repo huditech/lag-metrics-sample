@@ -5,7 +5,7 @@ Lag Metrics for Event Hub and defining an Azure Monitor alert.
 
 ## Documentation
 
-Documentation regarding Event Hub Lag Metrics can be found [here](https://huditech.github.io/lag-metrics/).
+Documentation regarding Lag Metrics can be found [here](https://huditech.github.io/lag-metrics/).
 
 ## Deploy the sample
 
@@ -16,6 +16,17 @@ az group create \
   --name lag-metrics-sample \
   --location EastUS \
   --subscription YOUR_SUBSCRIPTION_NAME_OR_ID
+```
+
+Before deploying Lag Metrics, Microsoft requires that the terms are accepted. Lag Metrics
+uses the Microsoft-defined standard terms for Managed Applications without any amendments. 
+You can find these terms [here](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RWXcE3). Please review them and then accept them with the following command:
+
+```
+az vm image terms accept \
+  --offer lag-metrics \
+  --plan standard \
+  --publisher huditechughaftungsbeschrnkt1673457598758
 ```
 
 The sample can then be deployed with:

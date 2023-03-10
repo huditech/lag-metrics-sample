@@ -15,7 +15,7 @@ var alertRuleName = 'example-lag-alert'
 var offsetContainerName = 'event-hub-checkpoints'
 
 var storageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageName};AccountKey=${storageKey};EndpointSuffix=${environment().suffixes.storage}'
-var eventHubConnectionString = listKeys(eventHubs::monitorAuthRule.id, eventHubs::monitorAuthRule.apiVersion).primaryConnectionString
+var eventHubConnectionString = eventHubs::monitorAuthRule.listKeys().primaryConnectionString
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageName
