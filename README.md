@@ -1,7 +1,7 @@
 # Sample for Lag Metrics for Event Hub
 
 This repo sets up a minimal example (using Bicep) for using 
-Lag Metrics for Event Hub and defining an Azure Monitor alert.
+[Lag Metrics for Event Hub](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/huditechughaftungsbeschrnkt1673457598758.lag-metrics?tab=overview) and defining an Azure Monitor alert.
 
 ## Documentation
 
